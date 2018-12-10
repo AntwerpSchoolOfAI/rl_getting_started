@@ -27,10 +27,10 @@ class DQNModel(nn.Module):
         return self.fc5(x)
 
 # example of how to train your network with new updated q-estimates
-def train_network(q_pred, q_target):
+def train_network(q_online, q_target):
 
     # Compute Huber loss
-    loss = F.smooth_l1_loss(q_pred, q_target.detach())
+    loss = F.smooth_l1_loss(q_online, q_target.detach())
 
     # Optimize the model
     optimizer.zero_grad()
@@ -63,9 +63,15 @@ for _ in range(1000):
     q_values = model(transformed_state_tensor)
     print(q_values)
 
+    # TODO: also take greedy actions
     action = env.action_space.sample() # take a random action
 
     state, reward, done, _ = env.step(action)
+
+    # update network
+    q_new = q_values.clone()
+    # TODO: update q_new values (also use exp replay)
+    train_network(q_new, q_values)
 
     if done:
         env.reset()
