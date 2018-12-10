@@ -8,3 +8,7 @@ Presentation: https://docs.google.com/presentation/d/1R6JQcEL3qR6mYfaG2aFTwvsFRo
 ## Gridworld
 
 run "jupyter notebook"
+
+## Racer
+
+run "pip install box2d box2d-kengz"
